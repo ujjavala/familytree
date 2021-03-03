@@ -1,0 +1,17 @@
+ADD_CHILD Luna Lola Female
+ADD_CHILD Ted Bella Female
+GET_RELATIONSHIP Minerva Siblings
+GET_RELATIONSHIP Molly Siblings
+GET_RELATIONSHIP Remus Siblings
+GET_RELATIONSHIP Alice Siblings
+GET_RELATIONSHIP Luna Siblings
+GET_RELATIONSHIP Louis Brother-In-Law
+GET_RELATIONSHIP Minerva Son
+GET_RELATIONSHIP Percy Son
+GET_RELATIONSHIP Percy Daughter
+GET_RELATIONSHIP Alice Sister-In-Law
+GET_RELATIONSHIP Remus Maternal-Aunt
+GET_RELATIONSHIP Remus Maternal-Uncle
+GET_RELATIONSHIP Hugo Paternal-Uncle
+GET_RELATIONSHIP Hugo Paternal-Aunt
+ADD_CHILD Flora Minerva Female
