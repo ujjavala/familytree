@@ -8,33 +8,41 @@ import java.util.Map;
 import java.util.Optional;
 
 public class Member {
-    private final  String name;
-    private Gender gender;
-    private final Optional<Map<String,Gender>> spouse;
-    private  Member parent;
+    private final String name;
+    private final Optional<Map<String, Gender>> spouse;
     private final List<Member> children = new ArrayList<>();
+    private Gender gender;
+    private Member parent;
+    private int generation;
 
-    public Member(String name, Gender gender, Optional<Map<String,Gender>> spouse) {
+    public Member(String name, Gender gender, Optional<Map<String, Gender>> spouse) {
         this.name = name;
         this.gender = gender;
-        this.spouse=spouse;
+        this.spouse = spouse;
     }
 
     public String getName() {
         return name;
     }
+
     public Gender getGender() {
         return gender;
-    }
-    public Member getParent() {
-        return parent;
-    }
-    public List<Member> getChildren() {
-        return children;
     }
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public Member getParent() {
+        return parent;
+    }
+
+    public void setParent(Member parent) {
+        this.parent = parent;
+    }
+
+    public List<Member> getChildren() {
+        return children;
     }
 
     public void addChild(Member child) {
@@ -42,10 +50,20 @@ public class Member {
         this.children.add(child);
     }
 
-    public void setParent(Member parent) {
-        this.parent = parent;
+    public void deleteChild(Member child) {
+        child.setParent(null);
+        this.children.remove(child);
     }
-    public Optional<Map<String,Gender>> getSpouse() {
+
+    public Optional<Map<String, Gender>> getSpouse() {
         return spouse;
+    }
+
+    public int getGeneration() {
+        return generation;
+    }
+
+    public void setGeneration(int generation) {
+        this.generation = generation;
     }
 }

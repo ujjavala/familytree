@@ -16,17 +16,11 @@ import static java.util.stream.Collectors.toList;
 
 public class MemberInputParser {
 
-    public List<String[]> parse() throws IOException {
-        Path path = Paths.get(getFilePath());
+    public List<String[]> parse(String location) throws IOException {
+        Path path = Paths.get(location);
         Stream<String> actionsStream = Files.lines(path);
-        return actionsStream.flatMap(line -> Arrays.stream(line.split("/n"))).collect(toList())
+        List<String> collectedStrings = actionsStream.flatMap(line -> Arrays.stream(line.split("/n"))).collect(toList());
+        return collectedStrings
                 .stream().map(action -> action.split(" ")).collect(toList());
-    }
-
-    private String getFilePath() throws IOException {
-        InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties");
-        Properties memberProperties = new Properties();
-        memberProperties.load(input);
-        return MessageFormat.format("{0}/{1}", new File("").getAbsolutePath(), memberProperties.getProperty("inputFileName"));
     }
 }

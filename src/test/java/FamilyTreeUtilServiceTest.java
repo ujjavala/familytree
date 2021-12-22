@@ -1,12 +1,13 @@
 import com.family.tree.enums.Message;
-import com.family.tree.service.FamilyTreeService;
-import com.family.tree.service.MemberService;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.family.tree.service.impl.FamilyTreeServiceImpl;
+import com.family.tree.service.impl.MemberServiceImpl;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.platform.suite.api.Suite;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +15,15 @@ import java.util.List;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class FamilyTreeServiceTest {
+@Suite
+@ExtendWith(MockitoExtension.class)
+public class FamilyTreeUtilServiceTest {
 
     @Mock
-    MemberService service;
+    MemberServiceImpl service;
     List<String[]> list = new ArrayList<>();
 
-    @Before
+    @BeforeEach
     public void setup()
     {
         String[]  action1 = {"ADD_CHILD", "Marcheline", "Anjelina", "Female"};
@@ -30,21 +32,16 @@ public class FamilyTreeServiceTest {
         String[]  action4 = {"ADD_CHILD", "Shiloh", "Vivienne", "Female"};
         String[]  action5 = {"GET_RELATIONSHIP", "Shiloh", "Siblings"};
         String[]  action6 = {"GET_RELATIONSHIP", "Vivienne", "Paternal-Uncle"};
-        list.add(action1);
-        list.add(action2);
-        list.add(action3);
-        list.add(action4);
-        list.add(action5);
-        list.add(action6);
+        list.addAll(List.of(action1,action2,action3,action4,action5,action6));
     }
 
     @Test
     public void shouldReturnOutputWhenActionExecuted(){
         when(service.addChild(anyString(),anyString(),anyString())).thenReturn(Message.CHILD_ADDED);
-        FamilyTreeService familyTreeService = new FamilyTreeService(list,service);
+        FamilyTreeServiceImpl familyTreeService = new FamilyTreeServiceImpl(list,service);
         var output = familyTreeService.executeAction();
-        Assert.assertNotNull(output);
-        Assert.assertEquals(6,output.size());
+        Assertions.assertNotNull(output);
+        Assertions.assertEquals(6,output.size());
     }
 
     @Test
@@ -52,9 +49,9 @@ public class FamilyTreeServiceTest {
         when(service.addChild(anyString(),anyString(),anyString())).thenReturn(Message.CHILD_ADDED);
         String[]  invalid = {"GET_RELATIONSHIP", "Vivienne"};
         list.add(invalid);
-        FamilyTreeService familyTreeService = new FamilyTreeService(list,service);
+        FamilyTreeServiceImpl familyTreeService = new FamilyTreeServiceImpl(list,service);
         var output = familyTreeService.executeAction();
-        Assert.assertTrue(output.contains(Message.INCORRECT_INPUT));
+        Assertions.assertTrue(output.contains(Message.INCORRECT_INPUT));
     }
 
     @Test
@@ -62,8 +59,8 @@ public class FamilyTreeServiceTest {
         when(service.addChild(anyString(),anyString(),anyString())).thenReturn(Message.CHILD_ADDED);
         String[]  invalid = {"ADD_CHILD", "Vivienne"};
         list.add(invalid);
-        FamilyTreeService familyTreeService = new FamilyTreeService(list,service);
+        FamilyTreeServiceImpl familyTreeService = new FamilyTreeServiceImpl(list,service);
         var output = familyTreeService.executeAction();
-        Assert.assertTrue(output.contains(Message.INCORRECT_INPUT));
+        Assertions.assertTrue(output.contains(Message.INCORRECT_INPUT));
     }
 }

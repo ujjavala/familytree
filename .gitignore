@@ -2,3 +2,7 @@ target
 .idea
 assets
 familytree.iml
+index.html
+jacoco-sessions.html
+jacoco-resources
+com.*
